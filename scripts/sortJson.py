@@ -17,7 +17,7 @@ def sort_json(file_path):
     with open(sorted_file_path, 'w') as sorted_file:
         json.dump(sorted_data, sorted_file, indent=4)
     
-    print(f"Sorted JSON has been saved to: {sorted_file_path}")
+    print(f"Sorted output JSON has been saved to: {sorted_file_path}")
 
 def sort_dict(d):
     if isinstance(d, dict):
