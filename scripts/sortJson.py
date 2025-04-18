@@ -1,14 +1,31 @@
 import sys
 import json
 import os
+import re
+
+def process_file(file_path):
+    with open(file_path, 'r', encoding='utf-8') as file:
+        data = file.read().strip()
+
+    # Check if the data starts and ends with quotes
+    if data.startswith('"') and data.endswith('"'):
+        # Remove starting and ending quotes
+        data = data[1:-1]
+
+        # Replace '\"' with an empty string, but not '\\\"'
+        data = re.sub(r'(?<!\\)\\"', '"', data)
+    # print(data)
+    try:
+        json_data = json.loads(data)
+        return json_data
+    except json.JSONDecodeError:
+        print("Error: The file content is not valid JSON.")
+        return None
 
 def sort_json(file_path):
-    try:
-        with open(file_path, 'r') as file:
-            data = json.load(file)
-    except ValueError:
-        print("Error: The file content is not valid JSON.")
-        return
+    data = process_file(file_path)
+
+    if(data==None): return
 
     sorted_data = sort_dict(data)
     print("Sorting done.")
